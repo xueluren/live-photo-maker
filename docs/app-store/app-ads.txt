@@ -1,0 +1,4 @@
+# app-ads.txt for LiveMaker — publish this file at the ROOT of the
+# developer website listed in App Store Connect, after registering in
+# AdMob. Replace pub-XXXXXXXXXXXXXXXX with the real AdMob publisher ID.
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
