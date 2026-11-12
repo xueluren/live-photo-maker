@@ -1,7 +1,8 @@
 # LiveMaker — your own intoLive, on your iPhone
 
 A tiny local iOS app that does what intoLive does, without intoLive:
-no ads, no paywall, no uploads. Everything happens on the phone.
+free for users, no paywall, no uploads — the conversion happens on the
+phone. It carries one AdMob banner at the top; ads are how it earns.
 
 两个功能：
 
@@ -11,6 +12,23 @@ no ads, no paywall, no uploads. Everything happens on the phone.
 2. **视频转 Live** — 选一段视频，拖动挑一帧做封面，存成 Live Photo。
 
 存好后在「照片」里打开 → 分享 → **用作墙纸**，即可设为动态锁屏。
+
+## 广告（免费模式的收入来源）
+
+- 顶部横幅用 Google AdMob（SDK 11.0.0，Swift Package Manager 接入），
+  代码在 `AdBannerView.swift`，启动时在 `LiveMakerApp` 里初始化，
+  并按苹果要求弹一次广告跟踪授权（ATT）。
+- **现在接的是 Google 官方测试 ID**（App ID 和横幅位 ID 都是
+  `ca-app-pub-3940256099942544…`），只能验证显示、不产生收入。
+- 上线前要换成真实 ID，需要 App 所有者本人：
+  1. 在 admob.google.com 注册账号并添加这个 App，拿到 App ID（`~` 结尾）
+     和横幅广告位 ID（`/` 结尾），分别替换工程里的
+     `INFOPLIST_KEY_GADApplicationIdentifier` 和 `AdBannerView.adUnitID`；
+  2. 补一份真实 Info.plist 加 `SKAdNetworkItems`（生成式 plist 放不下数组）；
+  3. 注意：AdMob 的正式广告要过 readiness review，前提是 App 已上架
+     受支持的商店（App Store）并在 AdMob 里关联——没上架的 App 只有
+     受限投放，测试/侧载自用基本没有收入；
+  4. 永远不要点自己 App 里的真实广告，那是无效流量，会封号。
 
 ## 它是怎么工作的
 
