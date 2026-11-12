@@ -39,6 +39,20 @@ image is never AI-redrawn), or pick a video, and save a genuine Live Photo
 straight into your photo library via PhotoKit. Free to install with Xcode
 and a personal Apple ID; see [`ios/README.md`](ios/README.md).
 
+## Live Maker (all-in-one)
+
+`livemaker.py` is the feature the iOS app mirrors, runnable anywhere with
+Python: one command animates a still image (snow / sparkles / zoom effects
+composited over the untouched original, full resolution) and produces the
+complete product set — animation MP4, Apple Live Photo pair, `.pvt` package,
+and single-file Motion Photo JPEG — with a pairing self-check:
+
+```bash
+pip install piexif pillow numpy
+python3 livemaker.py make --image photo.jpg --effect snow --outdir out --name photo
+python3 livemaker.py from-video --video clip.mp4 --outdir out --name clip
+```
+
 ## Requirements (CLI)
 
 - Python 3.9+
