@@ -1,0 +1,5 @@
+__pycache__/
+vendor/
+*.pvt/
+out/
+.DS_Store
