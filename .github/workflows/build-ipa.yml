@@ -1,0 +1,55 @@
+name: Build LiveMaker IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'ios/**'
+      - '.github/workflows/build-ipa.yml'
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build unsigned app
+        run: |
+          set -o pipefail
+          mkdir -p build
+          xcodebuild \
+            -project ios/LiveMaker.xcodeproj \
+            -target LiveMaker \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build 2>&1 | tee build/xcodebuild.log
+
+      - name: Package unsigned IPA
+        run: |
+          APP_PATH=$(find build/DerivedData/Build/Products -name 'LiveMaker.app' -type d | head -n 1)
+          test -n "$APP_PATH"
+          rm -rf Payload LiveMaker-unsigned.ipa
+          mkdir Payload
+          cp -R "$APP_PATH" Payload/
+          /usr/bin/zip -qry LiveMaker-unsigned.ipa Payload
+          unzip -l LiveMaker-unsigned.ipa | head -n 30
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: LiveMaker-unsigned-ipa
+          path: LiveMaker-unsigned.ipa
+          if-no-files-found: error
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-log
+          path: build/xcodebuild.log
+          if-no-files-found: ignore
