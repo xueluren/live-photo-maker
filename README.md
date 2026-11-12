@@ -30,7 +30,16 @@ at the byte level, in pure Python + ffmpeg:
   `PFVideoComplementMetadataVersionKey = "1"` (the layout used by
   [makelive](https://github.com/RhetTbull/makelive)).
 
-## Requirements
+## Prefer it on your iPhone instead? (no intoLive)
+
+The [`ios/`](ios/) folder contains **LiveMaker**, a small SwiftUI app that
+does the whole job on the phone itself — pick a still image, add an
+animation effect (snow / sparkles / slow zoom, rendered on-device, the
+image is never AI-redrawn), or pick a video, and save a genuine Live Photo
+straight into your photo library via PhotoKit. Free to install with Xcode
+and a personal Apple ID; see [`ios/README.md`](ios/README.md).
+
+## Requirements (CLI)
 
 - Python 3.9+
 - [ffmpeg](https://ffmpeg.org/) on your `PATH`
