@@ -22,9 +22,10 @@ phone. It carries one AdMob banner at the top; ads are how it earns.
   `ca-app-pub-3940256099942544…`），只能验证显示、不产生收入。
 - 上线前要换成真实 ID，需要 App 所有者本人：
   1. 在 admob.google.com 注册账号并添加这个 App，拿到 App ID（`~` 结尾）
-     和横幅广告位 ID（`/` 结尾），分别替换工程里的
-     `INFOPLIST_KEY_GADApplicationIdentifier` 和 `AdBannerView.adUnitID`；
-  2. 补一份真实 Info.plist 加 `SKAdNetworkItems`（生成式 plist 放不下数组）；
+     和横幅广告位 ID（`/` 结尾），分别替换 `LiveMaker/Info.plist` 里的
+     `GADApplicationIdentifier` 和 `AdBannerView.adUnitID`；
+  2. `SKAdNetworkItems` 已在 Info.plist 里（目前只含 Google 自家的
+     `cstr6suwn9.skadnetwork`，接中介广告时再按官方清单补全）；
   3. 注意：AdMob 的正式广告要过 readiness review，前提是 App 已上架
      受支持的商店（App Store）并在 AdMob 里关联——没上架的 App 只有
      受限投放，测试/侧载自用基本没有收入；
