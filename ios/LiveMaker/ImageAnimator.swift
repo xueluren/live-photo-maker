@@ -124,7 +124,7 @@ enum ImageAnimator {
             let img = renderer.image { ctx in
                 let c = ctx.cgContext
                 if effect == .zoom || effect == .snowZoom {
-                    let s = 1.0 + 0.08 * t
+                    let s = CGFloat(1.0 + 0.08 * t)
                     base.draw(in: CGRect(x: (size.width - size.width * s) / 2,
                                          y: (size.height - size.height * s) / 2,
                                          width: size.width * s, height: size.height * s))
@@ -135,7 +135,8 @@ enum ImageAnimator {
                     let y = (f.y + Double(f.wraps) * travel * t).truncatingRemainder(dividingBy: travel) - margin
                     let x = f.x + sin(2 * .pi * Double(f.swayCycles) * t + f.phase) * f.swayAmp
                     c.setFillColor(UIColor(white: 1, alpha: CGFloat(f.alpha / 255)).cgColor)
-                    c.fillEllipse(in: CGRect(x: x - f.r, y: y - f.r, width: 2 * f.r, height: 2 * f.r))
+                    c.fillEllipse(in: CGRect(x: CGFloat(x - f.r), y: CGFloat(y - f.r),
+                                             width: CGFloat(2 * f.r), height: CGFloat(2 * f.r)))
                 }
                 for sp in sparkles {
                     let s = 0.5 + 0.5 * sin(2 * .pi * Double(sp.cycles) * t + sp.phase)
@@ -145,9 +146,10 @@ enum ImageAnimator {
                     c.setFillColor(UIColor(white: 1, alpha: CGFloat(a)).cgColor)
                     var path = CGMutablePath()
                     for k in 0..<8 {
-                        let ang = -CGFloat.pi / 2 + CGFloat(k) * .pi / 4
+                        let ang = -Double.pi / 2 + Double(k) * .pi / 4
                         let rad = k % 2 == 0 ? r : r * 0.16
-                        let p = CGPoint(x: sp.x + rad * cos(ang), y: sp.y + rad * sin(ang))
+                        let p = CGPoint(x: CGFloat(sp.x + rad * cos(ang)),
+                                        y: CGFloat(sp.y + rad * sin(ang)))
                         if k == 0 { path.move(to: p) } else { path.addLine(to: p) }
                     }
                     path.closeSubpath()
